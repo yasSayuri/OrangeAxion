@@ -149,9 +149,9 @@ const LoginForm: React.FC = () => {
 
         <Separator>ou</Separator>
 
-        {/* Botão "Cadastrar" agora desativado e sem funcionalidade de navegação */}
-        <SecondaryButton type="button" disabled> {/* Removido onClick e adicionado disabled */}
-          Cadastrar (Indisponível)
+       
+        <SecondaryButton type="button" disabled> 
+          Cadastrar 
         </SecondaryButton>
 
         <TermsAndPrivacy>
