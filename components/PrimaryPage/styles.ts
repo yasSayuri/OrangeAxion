@@ -16,7 +16,7 @@ export const HeaderContainer = styled.header`
   padding: 20px 0; 
   height: 100px;
   background-color: #fff;
-  box-shadow: ${({ theme }) => theme.shadow};
+  box-shadow: ${({ theme }) => theme.shadow} !important;
   width: 100%; 
 `;
 
