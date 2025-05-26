@@ -1,10 +1,8 @@
-// components/LoginForm/index.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import LogoImg from '../../public/logo.png';
 import { FiMail, FiLock } from 'react-icons/fi';
 import MessageModal from '../MessageModal';
-// import { useRouter } from 'next/router'; // REMOVIDO: Não precisamos mais dele aqui para navegação
 import { useAuth } from '../../context/AuthContext';
 
 import {
@@ -31,17 +29,9 @@ const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState<{ title: string; message: string } | null>(null);
 
-  // const router = useRouter(); // REMOVIDO: Não precisamos mais dele aqui
-  const { user, login, isLoading } = useAuth();
+  const { login } = useAuth();
 
-  // Efeito para redirecionar se o usuário já estiver logado
-  useEffect(() => {
-    if (!isLoading && user) {
-      // Se o usuário já estiver autenticado e o carregamento inicial terminou, redirecione
-      // (iremos criar a página /pessoas ou /dashboard em breve)
-      window.location.href = '/pessoas'; // Redirecionamento forçado para o exemplo inicial
-    }
-  }, [user, isLoading]); // Removido 'router' das dependências
+
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -52,39 +42,21 @@ const LoginForm: React.FC = () => {
     setLoading(true);
     setModal(null);
 
-    try {
-      const apiUrl = 'http://localhost:1337/api/auth/local'; // Endpoint de login do Strapi
-
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ identifier: email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        login(data.user.email, data.jwt);
-        setModal({ title: 'Sucesso!', message: 'Login realizado com sucesso!' });
-        // Redireciona imediatamente após o login bem-sucedido
-        window.location.href = '/pessoas'; // Redirecionamento forçado, ou use router.push se preferir
-      } else {
-        const errorMessage = data.error?.message || 'Ocorreu um erro no login. Verifique suas credenciais.';
-        setModal({ title: 'Erro de Login', message: errorMessage });
-        console.error('Login failed:', data);
-      }
-    } catch (error) {
-      setModal({ title: 'Erro de Conexão', message: 'Não foi possível conectar ao servidor. Verifique sua conexão ou se a API está online.' });
-      console.error('Network error or API down:', error);
-    } finally {
-      setLoading(false);
+    if (email && password) {
+      login(email, 'mock-jwt-token-from-simulated-login');
+      setModal({ title: 'Login Simulado', message: 'Credenciais recebidas! Redirecionando...' });
+      window.location.href = '/inicio'; 
+      
+    } else {
+      setModal({ title: 'Erro de Login', message: 'Por favor, preencha email e senha para simular o login.' });
     }
+    setLoading(false);
+    return;
   };
 
-  // Funções de navegação do router foram removidas
-  // const handleGoToRegister = () => { router.push('/cadastro'); };
+  const handleGoToRegister = () => {
+    setModal({ title: 'Atenção!', message: 'O cadastro não está habilitado para o teste.' });
+  };
 
   return (
     <>
@@ -149,8 +121,7 @@ const LoginForm: React.FC = () => {
 
         <Separator>ou</Separator>
 
-       
-        <SecondaryButton type="button" disabled> 
+        <SecondaryButton type="button" onClick={handleGoToRegister} disabled={loading}>
           Cadastrar 
         </SecondaryButton>
 
@@ -169,5 +140,4 @@ const LoginForm: React.FC = () => {
     </>
   );
 };
-
 export default LoginForm;
