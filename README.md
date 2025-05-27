@@ -31,8 +31,8 @@ Para acessar o sistema, utilize um dos seguintes usuários já cadastrados na AP
 
 Como o backend utilizado é o Strapi fornecido pela empresa, é necessário **baixar e executar a API localmente** para o sistema funcionar corretamente, pois ela contém as collections e usuários necessários.
 
-Você poderá clonar o backend do repositório oficial da empresa (ainda a ser criado):  
-[Link do futuro repositório da API]
+Você poderá clonar o backend do repositório com as mudanças feitas:  
+https://github.com/yasSayuri/Backend-Orange/tree/main
 
 ---
 
