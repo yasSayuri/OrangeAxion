@@ -1,6 +1,6 @@
 # PROJETO TESTE TÉCNICO - ORANGE
 
-Projeto desenvolvido utilizando **Next.js** (framework React) em conjunto com a API do **Strapi** fornecida pela empresa Axion, disponível no repositório:  
+Projeto desenvolvido utilizando **Next.js** (framework React) em conjunto com a API do **Strapi** fornecida pela empresa Axion e typescript, disponível no repositório:  
 https://github.com/AxionCompany/axion-test?tab=readme-ov-file
 
 ---
