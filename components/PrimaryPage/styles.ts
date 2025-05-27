@@ -98,7 +98,7 @@ export const SeparatorText = styled.span`
   position: absolute;
   top: -30px;  
   transform: none;
-  background-color: white; 
+  background-color: transparent; 
   padding: 0 12px;
   font-weight: 700;
   font-size: 18px;
