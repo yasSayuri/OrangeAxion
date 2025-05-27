@@ -30,6 +30,7 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [modal, setModal] = useState<ModalState>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { login, loading } = useAuth();
   const router = useRouter();
@@ -41,28 +42,25 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setModal(null);
+    setErrorMessage(null); 
 
     if (!email || !password) {
-      setModal({ title: 'Erro de Login', message: 'Por favor, preencha o e-mail e a senha.' });
+      setErrorMessage('Por favor, preencha o e-mail e a senha.');
       return;
     }
 
     try {
-  await login(email, password);
-  setModal({ title: 'Sucesso!', message: 'Login realizado com sucesso! Redirecionando...' });
+      await login(email, password);
+      setModal({ title: 'Sucesso!', message: 'Login realizado com sucesso! Redirecionando...' });
+      setErrorMessage(null);
 
-  setTimeout(() => {
-    router.push('/inicio');
-  }, 1500); 
-} catch (error: unknown) {
-  console.error('Erro no login:', error);
-  let errorMessage = 'Ocorreu um erro desconhecido ao tentar fazer login.';
-  if (error instanceof Error) {
-    errorMessage = error.message;
-  }
-  setModal({ title: 'Erro de Login', message: errorMessage });
-}
-
+      setTimeout(() => {
+        router.push('/inicio');
+      }, 2000);
+    } catch (error: unknown) {
+      console.error('Erro no login:', error);
+      setErrorMessage('Email ou senha incorretos.');
+    }
   };
 
   const handleGoToRegister = () => {
@@ -111,6 +109,11 @@ const LoginForm: React.FC = () => {
               />
               <InputIcon><FiLock /></InputIcon>
             </InputWrapper>
+            {errorMessage && (
+              <p style={{ color: 'red', marginTop: '4px', fontSize: '0.875rem' }}>
+                {errorMessage}
+              </p>
+            )}
           </FormGroup>
 
           <CheckboxGroup>
