@@ -4,7 +4,6 @@ import {
   ModalContent,
   ModalTitle,
   ModalMessage,
-  ModalButton,
 } from './styles'; 
 
 interface MessageModalProps {
@@ -19,7 +18,6 @@ const MessageModal: React.FC<MessageModalProps> = ({ title, message, onClose }) 
       <ModalContent onClick={(e) => e.stopPropagation()}> 
         <ModalTitle>{title}</ModalTitle>
         <ModalMessage>{message}</ModalMessage>
-        <ModalButton onClick={onClose}>OK</ModalButton> 
       </ModalContent>
     </ModalOverlay>
   );

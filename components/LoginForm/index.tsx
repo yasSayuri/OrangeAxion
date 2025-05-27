@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
 
   setTimeout(() => {
     router.push('/inicio');
-  }, 1000); 
+  }, 1500); 
 } catch (error: unknown) {
   console.error('Erro no login:', error);
   let errorMessage = 'Ocorreu um erro desconhecido ao tentar fazer login.';
