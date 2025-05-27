@@ -29,11 +29,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     body: JSON.stringify({ identifier: email, password }),
   });
 
-  // Leia o corpo da resposta apenas uma vez
   const responseData = await response.json();
 
   if (!response.ok) {
-    // Estrutura do erro do Strapi v3
     const message =
       responseData?.message?.[0]?.messages?.[0]?.message ||
       'Erro ao fazer login';
@@ -43,7 +41,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return responseData;
 };
-
 
   const logout = () => {
     setUser(null);

@@ -1,9 +1,10 @@
 // styled.d.ts
 import 'styled-components';
-import { theme } from './styles/theme'; // O caminho e o import com chaves estão corretos para o seu theme.ts
+import { theme } from './styles/theme'; // seu tema exportado
 
 type CustomTheme = typeof theme;
 
 declare module 'styled-components' {
+  // Estende a interface DefaultTheme com o tipo do seu tema customizado
   export interface DefaultTheme extends CustomTheme {}
 }

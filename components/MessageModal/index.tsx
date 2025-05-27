@@ -1,4 +1,3 @@
-// components/MessageModal/index.tsx
 import React from 'react';
 import {
   ModalOverlay,

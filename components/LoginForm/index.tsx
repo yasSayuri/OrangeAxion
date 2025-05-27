@@ -23,7 +23,6 @@ import {
   TermsAndPrivacy,
 } from './styles';
 
-// Define o tipo do estado modal
 type ModalState = { title: string; message: string } | null;
 
 const LoginForm: React.FC = () => {

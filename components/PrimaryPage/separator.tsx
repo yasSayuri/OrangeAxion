@@ -1,6 +1,5 @@
 import React from "react";
-import { SeparatorWrapper, SeparatorLine, SeparatorText } from "./styles"; // ou onde estiver o styled
-
+import { SeparatorWrapper, SeparatorLine, SeparatorText } from "./styles"; 
 interface Props {
   section: "foods" | "places" | "people";
 }
