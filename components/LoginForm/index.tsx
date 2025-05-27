@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import LogoImg from '../../public/logo.png';
 import { FiMail, FiLock } from 'react-icons/fi';
 import MessageModal from '../MessageModal';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 import {
   FormContainer,
@@ -22,16 +23,17 @@ import {
   TermsAndPrivacy,
 } from './styles';
 
+// Define o tipo do estado modal
+type ModalState = { title: string; message: string } | null;
+
 const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [modal, setModal] = useState<{ title: string; message: string } | null>(null);
+  const [modal, setModal] = useState<ModalState>(null);
 
-  const { login } = useAuth();
-
-
+  const { login, loading } = useAuth();
+  const router = useRouter();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -39,19 +41,29 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setModal(null);
 
-    if (email && password) {
-      login(email, 'mock-jwt-token-from-simulated-login');
-      setModal({ title: 'Login Simulado', message: 'Credenciais recebidas! Redirecionando...' });
-      window.location.href = '/inicio'; 
-      
-    } else {
-      setModal({ title: 'Erro de Login', message: 'Por favor, preencha email e senha para simular o login.' });
+    if (!email || !password) {
+      setModal({ title: 'Erro de Login', message: 'Por favor, preencha o e-mail e a senha.' });
+      return;
     }
-    setLoading(false);
-    return;
+
+    try {
+  await login(email, password);
+  setModal({ title: 'Sucesso!', message: 'Login realizado com sucesso! Redirecionando...' });
+
+  setTimeout(() => {
+    router.push('/inicio');
+  }, 1000); 
+} catch (error: unknown) {
+  console.error('Erro no login:', error);
+  let errorMessage = 'Ocorreu um erro desconhecido ao tentar fazer login.';
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  }
+  setModal({ title: 'Erro de Login', message: errorMessage });
+}
+
   };
 
   const handleGoToRegister = () => {
@@ -122,7 +134,7 @@ const LoginForm: React.FC = () => {
         <Separator>ou</Separator>
 
         <SecondaryButton type="button" onClick={handleGoToRegister} disabled={loading}>
-          Cadastrar 
+          Cadastrar
         </SecondaryButton>
 
         <TermsAndPrivacy>
@@ -140,4 +152,5 @@ const LoginForm: React.FC = () => {
     </>
   );
 };
+
 export default LoginForm;
